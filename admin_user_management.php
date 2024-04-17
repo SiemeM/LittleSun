@@ -61,3 +61,4 @@ $users = $result->fetch_all(MYSQLI_ASSOC);
     </table>
 </body>
 </html>
+
