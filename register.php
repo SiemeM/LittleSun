@@ -1,18 +1,16 @@
 <?php
-// Include database connection file here
 require_once 'db_connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
-    
-    // Hash password
+    $role = 'user'; // Default role
+
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Insert user into database
-    $sql = "INSERT INTO users (email, password) VALUES (?, ?)";
+    $sql = "INSERT INTO users (email, password, role) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $email, $hashed_password);
+    $stmt->bind_param("sss", $email, $hashed_password, $role);
     if ($stmt->execute()) {
         echo "User registered successfully!";
     } else {
