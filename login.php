@@ -31,11 +31,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <form action="" method="post">
+<form action="" method="post">
     <label for="email">Email:</label>
     <input type="email" name="email" required>
     <label for="password">Password:</label>
     <input type="password" name="password" required>
     <button type="submit">Login</button>
+    <a href="register.php" class="btn">Register</a> <!-- HTML link styled as button -->
+</form>
+
 </form>
 <?php if (!empty($login_error)): ?>
     <p><?php echo $login_error; ?></p>
