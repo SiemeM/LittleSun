@@ -1,25 +1,25 @@
 <?php
-session_start();
-require_once 'db_connect.php'; // Your database connection file
+session_start(); // Start een nieuwe sessie of hervat de bestaande sessie
+require_once 'db_connect.php'; // Voeg het bestand voor de databaseverbinding toe
 
-// Security check to ensure only admin can access this page
+// Beveiligingscontrole om te verzekeren dat alleen een admin deze pagina kan bezoeken
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: login.php");
+    header("Location: login.php"); 
     exit();
 }
 
-// Handle role change submissions
+// Behandel het indienen van wijzigingen in de rol van gebruikers
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_role'])) {
-    $user_id = $_POST['user_id'];
-    $new_role = $_POST['role'];
-    $stmt = $conn->prepare("UPDATE users SET role = ? WHERE id = ?");
-    $stmt->bind_param("si", $new_role, $user_id);
-    $stmt->execute();
+    $user_id = $_POST['user_id']; // Het ID van de gebruiker wiens rol wordt gewijzigd
+    $new_role = $_POST['role']; // De nieuwe rol die aan de gebruiker wordt toegewezen
+    $stmt = $conn->prepare("UPDATE users SET role = ? WHERE id = ?"); // Bereid het SQL-statement voor
+    $stmt->bind_param("si", $new_role, $user_id); // Koppel de parameters aan het SQL-statement
+    $stmt->execute(); // Voer het SQL-statement uit
 }
 
-// Fetch all users
+// Haal alle gebruikers op uit de database
 $result = $conn->query("SELECT id, email, role FROM users");
-$users = $result->fetch_all(MYSQLI_ASSOC);
+$users = $result->fetch_all(MYSQLI_ASSOC); // Sla de resultaten op in een associatieve array
 ?>
 
 <!DOCTYPE html>
@@ -61,4 +61,3 @@ $users = $result->fetch_all(MYSQLI_ASSOC);
     </table>
 </body>
 </html>
-

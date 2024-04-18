@@ -1,34 +1,48 @@
 <?php
+// Start een nieuwe sessie of hervat de bestaande sessie
 session_start();
 
-// Check if the user is logged in, using a session variable set during login
+// Controleer of de gebruiker is ingelogd door gebruik te maken van een sessievariabele die is ingesteld tijdens het inloggen
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php"); // Redirect to login page if not logged in
+    // Als de gebruiker niet is ingelogd, omleiden naar de inlogpagina
+    header("Location: login.php");
     exit();
 }
 
-// Handle logout
+// Afhandelen van uitloggen
 if (isset($_POST['logout'])) {
-    // Destroy the session
+    // Vernietig de sessie
     session_destroy();
-    header("Location: login.php"); // Redirect to login page
+    // Omleiden naar de inlogpagina
+    header("Location: login.php");
     exit();
 }
 
-// Determine the content based on the role
+// Bepaal de inhoud op basis van de rol van de gebruiker
 function getUserContent($role) {
     switch ($role) {
         case 'admin':
-            return "Welcome, Admin! Here are your admin tools and analytics.";
+            // Retourneert content specifiek voor beheerders
+            return "
+                <p>Welkom, Admin! Hier zijn je beheerdersgereedschappen en analyses.</p>
+                <ul>
+                    <li><a href='admin_user_management.php'>Gebruikersbeheer</a></li>
+                    <li><a href='admin_locations.php'>Locatiebeheer</a></li>
+                </ul>
+            ";
         case 'manager':
-            return "Welcome, Manager! Here is your management dashboard.";
+            // Retourneert content specifiek voor managers
+            return "<p>Welkom, Manager! Hier is je management dashboard.</p>";
         case 'user':
-            return "Welcome, User! Enjoy your visit.";
+            // Retourneert content voor standaard gebruikers
+            return "<p>Welkom, Gebruiker! Geniet van je bezoek.</p>";
         default:
-            return "Welcome! Please contact support to assign your role.";
+            // Retourneert een standaardbericht als de rol niet is gedefinieerd
+            return "<p>Welkom! Neem contact op met de ondersteuning om je rol toe te wijzen.</p>";
     }
 }
 
+// Haal de juiste content op voor de gebruiker gebaseerd op hun rol
 $userContent = getUserContent($_SESSION['role']);
 ?>
 
@@ -41,7 +55,7 @@ $userContent = getUserContent($_SESSION['role']);
     <title>Welcome</title>
 </head>
 <body>
-    <p><?php echo $userContent; ?></p>
+    <?php echo $userContent; ?>
     <form action="" method="post">
         <button type="submit" name="logout">Logout</button>
     </form>
