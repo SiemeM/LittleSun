@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+#logo {
+    margin-left: 32px;
+    width: 161px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: #000000;
+    color: white;
+    box-shadow: black 1px;
+}
+
+.navItems {
+    display: flex;
+    color: #FFFFFF;
+    align-items: center;
+}
+
+.navItems a {
+    margin-right: 32px; /* Adds space between navigation items */
+    color: white; /* Text color for navigation items */
+    text-decoration: none; /* Removes underline from links */
+}
+
+.navItems .navItem4 {
+    background-color: #FFDD00;
+    color: #000000;
+    padding: 8px 16px;
+    border-radius: 16px;
+    font-weight: bold;
+}
+
+.container {
+    margin-top: 128px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bodyText {
+    width: 480px;
+    margin-left: 184px;
+}
+
+.bodyText h1 {
+    margin: 0;
+    margin-bottom: 64px;
+}
+
+.bodyText h1 span {
+    text-decoration: underline 5px #FFDD00;
+}
+
+.bodyText p {
+    font-size: 1.25em;
+    line-height: 1.75;
+}
+
+.loginForm {
+    padding: 32px 0;
+    border-radius: 16px;
+    background-color: #000000;
+    display: flex;
+    flex-direction: column;
+    width: 480px;
+    justify-content: center;
+    margin-right: 184px;
+}
+
+.loginForm label {
+    color: #FFFFFF;
+    margin-left: 48px;
+    margin-bottom: 4px;
+}
+
+.formTitle {
+    margin-bottom: 16px;
+    text-align: center;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 1.25em;
+}
+
+.loginform a {
+    text-align: center;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.loginForm input[type="email"],
+.loginForm input[type="password"],
+.loginForm button {
+    width: 100%; /* Set width to 100% of the form container */
+    max-width: 400px; /* Set max-width to a specific value */
+    margin: 0 auto; /* Center horizontally */
+    margin-bottom: 24px; /* Add margin bottom for spacing */
+}
+
+.loginForm button {
+    padding: 8px 0;
+    background-color: #FFDD00;
+    color: #000000;
+    border-radius: 16px;
+    font-weight: bold;
+}
+
+.loginForm input {
+    padding: 8px 0;
+    border-radius: 16px;
+}
+
+.formLinks {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px;
+}
+
+.formLinks a {
+    margin-bottom: 4px;
+}
