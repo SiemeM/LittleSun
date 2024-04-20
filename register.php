@@ -1,6 +1,6 @@
 <?php
 // Inclusief het bestand voor databaseverbinding
-require_once 'db_connect.php';
+require_once 'db/db_connect.php';
 
 // Controleert of het formulier is ingediend 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

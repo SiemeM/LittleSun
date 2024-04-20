@@ -2,7 +2,7 @@
 // Start een sessie
 session_start();
 // databaseverbinding
-require_once 'db_connect.php';
+require_once 'db/db_connect.php';
 
 // Controleer of het formulier is ingediend
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -50,13 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="normalize.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/normalize.css">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
 <nav>
-    <img src="logo.png" alt="" id="logo">
+    <img src="img/logo.png" alt="" id="logo">
     <div class="navItems">
         <a href="" class="navItem1">ITEM</a>
         <a href="" class="navItem2">ITEM</a>

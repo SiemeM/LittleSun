@@ -1,49 +1,17 @@
 <?php
-// Start een nieuwe sessie of hervat de bestaande sessie
-session_start();
+require_once 'classes/SessionManager.php';
+require_once 'classes/ContentGenerator.php';
 
-// Controleer of de gebruiker is ingelogd door gebruik te maken van een sessievariabele die is ingesteld tijdens het inloggen
-if (!isset($_SESSION['user_id'])) {
-    // Als de gebruiker niet is ingelogd, omleiden naar de inlogpagina
-    header("Location: login.php");
-    exit();
-}
+$sessionManager = new SessionManager();
+$contentGenerator = new ContentGenerator();
 
-// Afhandelen van uitloggen
+$sessionManager->checkUserLoggedIn();
+
 if (isset($_POST['logout'])) {
-    // Vernietig de sessie
-    session_destroy();
-    // Omleiden naar de inlogpagina
-    header("Location: login.php");
-    exit();
+    $sessionManager->logout();
 }
 
-// Bepaal de inhoud op basis van de rol van de gebruiker
-function getUserContent($role) {
-    switch ($role) {
-        case 'admin':
-            // Retourneert content specifiek voor beheerders
-            return "
-                <p>Welkom, Admin! Hier zijn je beheerdersgereedschappen en analyses.</p>
-                <ul>
-                    <li><a href='admin_user_management.php'>Gebruikersbeheer</a></li>
-                    <li><a href='admin_locations.php'>Locatiebeheer</a></li>
-                </ul>
-            ";
-        case 'manager':
-            // Retourneert content specifiek voor managers
-            return "<p>Welkom, Manager! Hier is je management dashboard.</p>";
-        case 'user':
-            // Retourneert content voor standaard gebruikers
-            return "<p>Welkom, Gebruiker! Geniet van je bezoek.</p>";
-        default:
-            // Retourneert een standaardbericht als de rol niet is gedefinieerd
-            return "<p>Welkom! Neem contact op met de ondersteuning om je rol toe te wijzen.</p>";
-    }
-}
-
-// Haal de juiste content op voor de gebruiker gebaseerd op hun rol
-$userContent = getUserContent($_SESSION['role']);
+$userContent = $contentGenerator->getUserContent($_SESSION['role']);
 ?>
 
 <!DOCTYPE html>

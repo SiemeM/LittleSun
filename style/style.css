@@ -118,6 +118,7 @@ nav {
 .loginForm input {
     padding: 8px 0;
     border-radius: 16px;
+    padding-left: 16px;
 }
 
 .formLinks {

@@ -1,6 +1,9 @@
 <?php
+require_once 'db/db_connect.php'; // Zorg ervoor dat dit het correcte pad is naar je db_connect.php bestand
+require_once 'classes/UserManager.php'; // Het pad naar de UserManager klasse
+// Voeg require_once toe voor andere klassen die je nodig hebt
+
 session_start();
-require_once 'db_connect.php';
 
 // Controleer of de gebruiker ingelogd is en de rol van admin heeft
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
@@ -8,30 +11,19 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-// Verwerk het formulier wanneer het wordt ingediend
+$userManager = new UserManager($conn);
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Haal de gegevens uit het formulier
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $profilePicture = $_FILES['profile_picture']['name'];
-    $hubLocation = $_POST['hub_location'];
+    try {
+        // Hier zou je de profielfoto uploaden met de ProfilePictureUploader klasse
+        // en de bestandsnaam terugkrijgen om deze door te geven aan de addHubManager methode.
 
-    // Hash het wachtwoord voor veilige opslag
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    // SQL-query om een nieuwe hub manager toe te voegen
-    $sql = "INSERT INTO users (name, email, password, role, profile_picture, hub_location) VALUES (?, ?, ?, 'manager', ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi", $name, $email, $hashedPassword, $profilePicture, $hubLocation);
-    if ($stmt->execute()) {
-        // Omleiden naar een bevestigingspagina of toon een succesbericht
+        $userManager->addHubManager($_POST['name'], $_POST['email'], $_POST['password'], $_FILES['profile_picture']['name'], $_POST['hub_location']);
         echo "Hub manager toegevoegd.";
-    } else {
-        echo "Er is een fout opgetreden: " . $conn->error;
+    } catch (Exception $e) {
+        echo $e->getMessage();
     }
 }
-
 ?>
 
 <!DOCTYPE html>
