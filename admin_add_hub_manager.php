@@ -1,23 +1,22 @@
 <?php
-require_once 'db/db_connect.php'; // Zorg ervoor dat dit het correcte pad is naar je db_connect.php bestand
-require_once 'classes/UserManager.php'; // Het pad naar de UserManager klasse
-// Voeg require_once toe voor andere klassen die je nodig hebt
+require_once 'db/db_connect.php'; // Database connectie
+require_once 'classes/UserManager.php'; // UserManager klasse
+require_once 'classes/LocationManager.php'; // LocationManager klasse
 
 session_start();
 
-// Controleer of de gebruiker ingelogd is en de rol van admin heeft
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
     exit();
 }
 
+$locationManager = new LocationManager($conn);
+$locations = $locationManager->getLocations(); // Haal locaties op
+
 $userManager = new UserManager($conn);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
-        // Hier zou je de profielfoto uploaden met de ProfilePictureUploader klasse
-        // en de bestandsnaam terugkrijgen om deze door te geven aan de addHubManager methode.
-
         $userManager->addHubManager($_POST['name'], $_POST['email'], $_POST['password'], $_FILES['profile_picture']['name'], $_POST['hub_location']);
         echo "Hub manager toegevoegd.";
     } catch (Exception $e) {
@@ -44,7 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <label for="profile_picture">Profielfoto:</label>
     <input type="file" name="profile_picture" required><br>
     <label for="hub_location">Hub Locatie:</label>
-    <input type="number" name="hub_location" required><br>
+    <select name="hub_location" required>
+        <?php foreach ($locations as $location): ?>
+            <option value="<?php echo $location['id']; ?>"><?php echo htmlspecialchars($location['location_name']); ?></option>
+        <?php endforeach; ?>
+    </select><br>
     <button type="submit">Voeg Toe</button>
 </form>
 </body>

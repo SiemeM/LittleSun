@@ -2,6 +2,9 @@
 // Inclusief het bestand voor databaseverbinding
 require_once 'db/db_connect.php';
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 // Controleert of het formulier is ingediend 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Haalt de ingevoerde e-mail en wachtwoord uit het POST-formulier

@@ -23,4 +23,11 @@ class SessionManager {
             exit();
         }
     }
+
+    public function checkManager() {
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'manager') {
+            header("Location: login.php");
+            exit();
+        }
+    }
 }

@@ -1,22 +1,45 @@
 <?php
-require_once 'classes/SessionManager.php'; // Zorg ervoor dat deze klasse de sessie beheert
-require_once 'db/db_connect.php'; // Dit blijft het bestand dat de databaseverbinding opzet
-require_once 'classes/LocationManager.php'; // De nieuwe locatie manager klasse
-
+require_once 'classes/SessionManager.php'; // Veronderstelt dat deze klasse sessiecontroles beheert
+require_once 'db/db_connect.php'; // Veronderstelt dat dit het bestand is dat de databaseverbinding opzet
+require_once 'classes/LocationManager.php'; // Beheert locatiegerelateerde acties
 
 $sessionManager = new SessionManager();
 $sessionManager->checkAdmin(); // Check of de gebruiker admin is
 
 $locationManager = new LocationManager($conn); // Maak een nieuwe instantie van de locatiemanager
+$message = ''; // Bericht voor feedback aan de gebruiker
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['create'])) {
-        $locationManager->createLocation($_POST['location_name']);
-    } elseif (isset($_POST['update'])) {
-        $locationManager->updateLocation($_POST['location_id'], $_POST['location_name']);
-    } elseif (isset($_POST['delete'])) {
-        $locationManager->deleteLocation($_POST['location_id']);
+try {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['create'])) {
+            $locationName = $_POST['location_name'];
+            if (!empty($locationName)) {
+                $locationManager->createLocation($locationName);
+                $message = "Locatie succesvol aangemaakt.";
+            } else {
+                $message = "De locatienaam mag niet leeg zijn.";
+            }
+        } elseif (isset($_POST['update'])) {
+            $locationName = $_POST['location_name'];
+            $locationId = $_POST['location_id'];
+            if (!empty($locationName) && !empty($locationId)) {
+                $locationManager->updateLocation($locationId, $locationName);
+                $message = "Locatie succesvol bijgewerkt.";
+            } else {
+                $message = "De locatienaam en locatie-ID mogen niet leeg zijn.";
+            }
+        } elseif (isset($_POST['delete'])) {
+            $locationId = $_POST['location_id'];
+            if (!empty($locationId)) {
+                $locationManager->deleteLocation($locationId);
+                $message = "Locatie succesvol verwijderd.";
+            } else {
+                $message = "Locatie-ID mag niet leeg zijn.";
+            }
+        }
     }
+} catch (Exception $e) {
+    $message = $e->getMessage();
 }
 
 $locations = $locationManager->getLocations();

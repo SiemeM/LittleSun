@@ -1,64 +1,55 @@
 <?php
-session_start();
-require_once 'db/db_connect.php'; // Your database connection file
+require_once 'db/db_connect.php'; // Zorg ervoor dat dit het correcte pad is naar je db_connect.php bestand
+require_once 'classes/SessionManager.php';
+require_once 'classes/UserManager.php';
 
-// Security check to ensure only admin can access this page
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: login.php");
-    exit();
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+
+$sessionManager = new SessionManager();
+$sessionManager->checkAdmin();
+
+$userManager = new UserManager($conn);
+
+$message = '';
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset_password'])) {
+    $userId = $_POST['user_id'];
+    $newPassword = $_POST['new_password'];
+
+    try {
+        $userManager->resetPassword($userId, $newPassword);
+        $message = "Wachtwoord succesvol gereset voor gebruiker ID: $userId";
+    } catch (Exception $e) {
+        $message = $e->getMessage();
+    }
 }
 
-// Handle role change submissions
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_role'])) {
-    $user_id = $_POST['user_id'];
-    $new_role = $_POST['role'];
-    $stmt = $conn->prepare("UPDATE users SET role = ? WHERE id = ?");
-    $stmt->bind_param("si", $new_role, $user_id);
-    $stmt->execute();
-}
-
-// Fetch all users
-$result = $conn->query("SELECT id, email, role FROM users");
-$users = $result->fetch_all(MYSQLI_ASSOC);
+$managers = $userManager->getAllHubManagers(); // Deze methode moet nog toegevoegd worden aan UserManager
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin User Management</title>
+    <title>Reset Hub Manager Password</title>
 </head>
 <body>
-    <h1>User Management</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($users as $user): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($user['email']); ?></td>
-                <td>
-                    <form action="" method="post">
-                        <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
-                        <select name="role">
-                            <option value="user" <?php echo $user['role'] == 'user' ? 'selected' : ''; ?>>User</option>
-                            <option value="manager" <?php echo $user['role'] == 'manager' ? 'selected' : ''; ?>>Manager</option>
-                            <option value="admin" <?php echo $user['role'] == 'admin' ? 'selected' : ''; ?>>Admin</option>
-                        </select>
-                        <button type="submit" name="change_role">Change Role</button>
-                    </form>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+<h1>Reset Hub Manager Password</h1>
+<p><?php echo $message; ?></p>
+
+<form action="" method="post">
+    <label for="user_id">Selecteer Hub Manager:</label>
+    <select name="user_id" required>
+        <?php foreach ($managers as $manager): ?>
+            <option value="<?php echo $manager['id']; ?>"><?php echo htmlspecialchars($manager['name']); ?></option>
+        <?php endforeach; ?>
+    </select><br>
+
+    <label for="new_password">Nieuw Wachtwoord:</label>
+    <input type="password" name="new_password" required><br>
+
+    <button type="submit" name="reset_password">Reset Wachtwoord</button>
+</form>
 </body>
 </html>
-
