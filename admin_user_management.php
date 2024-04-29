@@ -1,5 +1,5 @@
 <?php
-require_once 'db/db_connect.php'; // Zorg ervoor dat dit het correcte pad is naar je db_connect.php bestand
+require_once 'db/db_connect.php'; // Make sure this is the correct path to your db_connect.php file
 require_once 'classes/SessionManager.php';
 require_once 'classes/UserManager.php';
 
@@ -19,17 +19,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset_password'])) {
 
     try {
         $userManager->resetPassword($userId, $newPassword);
-        $message = "Wachtwoord succesvol gereset voor gebruiker ID: $userId";
+        $message = "Password successfully reset for user ID: $userId";
     } catch (Exception $e) {
         $message = $e->getMessage();
     }
 }
 
-$managers = $userManager->getAllHubManagers(); // Deze methode moet nog toegevoegd worden aan UserManager
+$managers = $userManager->getAllHubManagers(); // This method still needs to be added to UserManager
 ?>
 
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Reset Hub Manager Password</title>
@@ -39,17 +39,17 @@ $managers = $userManager->getAllHubManagers(); // Deze methode moet nog toegevoe
 <p><?php echo $message; ?></p>
 
 <form action="" method="post">
-    <label for="user_id">Selecteer Hub Manager:</label>
+    <label for="user_id">Select Hub Manager:</label>
     <select name="user_id" required>
         <?php foreach ($managers as $manager): ?>
             <option value="<?php echo $manager['id']; ?>"><?php echo htmlspecialchars($manager['name']); ?></option>
         <?php endforeach; ?>
     </select><br>
 
-    <label for="new_password">Nieuw Wachtwoord:</label>
+    <label for="new_password">New Password:</label>
     <input type="password" name="new_password" required><br>
 
-    <button type="submit" name="reset_password">Reset Wachtwoord</button>
+    <button type="submit" name="reset_password">Reset Password</button>
 </form>
 </body>
 </html>

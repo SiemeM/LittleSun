@@ -5,11 +5,10 @@ require_once 'classes/UserManager.php';
 require_once 'classes/SessionManager.php';
 
 $sessionManager = new SessionManager();
-$sessionManager->checkManager(); // Verifieert dat de huidige gebruiker een manager is
-
+$sessionManager->checkManager(); // Verifies that the current user is a manager
 
 $taskManager = new TaskAssignmentManager($conn);
-$userManager = new UserManager($conn); // Correcte instantiatie van UserManager
+$userManager = new UserManager($conn); // Correct instantiation of UserManager
 $message = '';
 
 ini_set('display_errors', 1);
@@ -20,10 +19,10 @@ try {
         $userId = $_POST['user_id'];
         $taskTypeId = $_POST['task_type_id'];
         $taskManager->assignTaskTypeToUser($userId, $taskTypeId);
-        $message = "Taaktype succesvol toegewezen aan gebruiker.";
+        $message = "Task type successfully assigned to user.";
     }
     $taskTypes = $taskManager->getAvailableTaskTypes();
-    $users = $userManager->getAllUsers(); // Nu correct opgehaald met UserManager
+    $users = $userManager->getAllUsers(); // Now fetched correctly using UserManager
 } catch (Exception $e) {
     $message = $e->getMessage();
 }
@@ -31,30 +30,30 @@ try {
 ?>
 
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Taaktype Toewijzen aan Gebruiker</title>
+    <title>Assign Task Type to User</title>
 </head>
 <body>
-<h1>Taaktype Toewijzen</h1>
+<h1>Assign Task Type</h1>
 <?php if ($message): ?>
     <p><?php echo $message; ?></p>
 <?php endif; ?>
 <form action="" method="post">
-    <label for="user_id">Gebruiker:</label>
+    <label for="user_id">User:</label>
     <select name="user_id" required>
         <?php foreach ($users as $user): ?>
             <option value="<?php echo $user['id']; ?>"><?php echo htmlspecialchars($user['name']); ?></option>
         <?php endforeach; ?>
     </select><br>
-    <label for="task_type_id">Taaktype:</label>
+    <label for="task_type_id">Task Type:</label>
     <select name="task_type_id" required>
         <?php foreach ($taskTypes as $type): ?>
             <option value="<?php echo $type['id']; ?>"><?php echo htmlspecialchars($type['name']); ?></option>
         <?php endforeach; ?>
     </select><br>
-    <button type="submit">Toewijzen</button>
+    <button type="submit">Assign</button>
 </form>
 </body>
 </html>

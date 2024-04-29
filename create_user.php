@@ -4,7 +4,7 @@ require_once 'classes/UserManager.php';
 require_once 'classes/SessionManager.php';
 
 $sessionManager = new SessionManager();
-$sessionManager->checkManager(); // Zorgt ervoor dat alleen managers toegang hebben
+$sessionManager->checkManager(); // Ensures only managers have access
 
 $userManager = new UserManager($conn);
 $message = '';
@@ -14,10 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        $profilePicture = $_FILES['profile_picture']['name']; // Verwerk de upload van de afbeelding correct
+        $profilePicture = $_FILES['profile_picture']['name']; // Process the image upload correctly
 
         $userManager->createUser($name, $email, $password, $profilePicture);
-        $message = "Gebruiker succesvol aangemaakt.";
+        $message = "User created successfully.";
     } catch (Exception $e) {
         $message = $e->getMessage();
     }
@@ -26,25 +26,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Gebruiker Aanmaken</title>
+    <title>Create User</title>
 </head>
 <body>
-<h1>Gebruiker Aanmaken</h1>
+<h1>Create User</h1>
 <p><?php echo $message; ?></p>
 
 <form action="" method="post" enctype="multipart/form-data">
-    <label for="name">Naam:</label>
+    <label for="name">Name:</label>
     <input type="text" name="name" required><br>
     <label for="email">Email:</label>
     <input type="email" name="email" required><br>
-    <label for="password">Wachtwoord:</label>
+    <label for="password">Password:</label>
     <input type="password" name="password" required><br>
-    <label for="profile_picture">Profielfoto:</label>
+    <label for="profile_picture">Profile Picture:</label>
     <input type="file" name="profile_picture" required><br>
-    <button type="submit">Gebruiker Aanmaken</button>
+    <button type="submit">Create User</button>
 </form>
 </body>
 </html>

@@ -10,52 +10,49 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-
-
 $taskTypeManager = new TaskTypeManager($conn);
 $message = '';
 
-// Verplaats de logica om de taaktypen op te halen buiten de try-catch block
-try {
-    $taskTypes = $taskTypeManager->getAllTaskTypes(); // Verplaats deze regel naar boven
-} catch (Exception $e) {
-    $message = "Kon taaktypen niet laden: " . $e->getMessage();
-}
+// Fetch task types outside the try-catch block
+$taskTypes = $taskTypeManager->getAllTaskTypes();
 
 try {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['add'])) {
             $taskTypeName = $_POST['task_type_name'];
             $taskTypeManager->addTaskType($taskTypeName);
-            $message = "Taaktype toegevoegd.";
-            $taskTypes = $taskTypeManager->getAllTaskTypes(); // Haal opnieuw op na succesvol toevoegen
+            $message = "Task type added.";
+            // Refresh task types after successful addition
+            $taskTypes = $taskTypeManager->getAllTaskTypes();
         } elseif (isset($_POST['delete'])) {
             $taskTypeId = $_POST['task_type_id'];
             $taskTypeManager->deleteTaskType($taskTypeId);
-            $message = "Taaktype verwijderd.";
-            $taskTypes = $taskTypeManager->getAllTaskTypes(); // Haal opnieuw op na succesvol verwijderen
+            $message = "Task type deleted.";
+            // Refresh task types after successful deletion
+            $taskTypes = $taskTypeManager->getAllTaskTypes();
         }
     }
 } catch (Exception $e) {
     $message = $e->getMessage();
-    $taskTypes = $taskTypeManager->getAllTaskTypes(); // Haal opnieuw op als er een fout optreedt
+    // Refresh task types if an error occurs
+    $taskTypes = $taskTypeManager->getAllTaskTypes();
 }
 
 ?>
 
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Beheer Taaktypen</title>
+    <title>Manage Task Types</title>
 </head>
 <body>
-<h1>Beheer Taaktypen</h1>
+<h1>Manage Task Types</h1>
 <p><?php echo $message; ?></p>
 
 <form action="" method="post">
-    <input type="text" name="task_type_name" placeholder="Naam van taaktype" required>
-    <button type="submit" name="add">Taaktype Toevoegen</button>
+    <input type="text" name="task_type_name" placeholder="Name of task type" required>
+    <button type="submit" name="add">Add Task Type</button>
 </form>
 
 <?php if (!empty($taskTypes)): ?>
@@ -64,13 +61,13 @@ try {
             <li><?php echo htmlspecialchars($type['name']); ?>
                 <form method="post">
                     <input type="hidden" name="task_type_id" value="<?php echo $type['id']; ?>">
-                    <button type="submit" name="delete">Verwijderen</button>
+                    <button type="submit" name="delete">Delete</button>
                 </form>
             </li>
         <?php endforeach; ?>
     </ul>
 <?php else: ?>
-    <p>Geen taaktypen gevonden.</p>
+    <p>No task types found.</p>
 <?php endif; ?>
 </body>
 </html>

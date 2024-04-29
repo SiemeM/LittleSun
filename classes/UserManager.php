@@ -67,4 +67,44 @@ class UserManager {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getUsersWithTasks() {
+        $sql = "SELECT u.name, u.profile_picture, IFNULL(tt.name, 'Deze gebruiker heeft nog geen taak.') AS task_type
+                FROM users u
+                LEFT JOIN user_task_types utt ON u.id = utt.user_id
+                LEFT JOIN task_types tt ON utt.task_type_id = tt.id
+                WHERE u.role = 'user'";  // Filtert alleen gebruikers met de rol 'user'
+
+        $stmt = $this->dbConnection->prepare($sql);
+        if (!$stmt) {
+            echo "Fout bij het voorbereiden van de query: " . $this->dbConnection->error;
+            return [];
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getUserById($userId) {
+        $stmt = $this->dbConnection->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+    public function updateUser($id, $name, $email, $password, $profilePicture) {
+        $sql = "UPDATE users SET name = ?, email = ?, password = ?, profile_picture = ? WHERE id = ?";
+        $stmt = $this->dbConnection->prepare($sql);
+        if (!$stmt) {
+            echo "Prepare failed: (" . $this->dbConnection->errno . ") " . $this->dbConnection->error;
+            return false;
+        }
+        $stmt->bind_param("ssssi", $name, $email, $password, $profilePicture, $id);
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            return false;
+        }
+        return true;
+    }
+    
+
 }
