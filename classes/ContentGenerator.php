@@ -20,13 +20,13 @@ class ContentGenerator {
                     <li><a href='task_can_do.php'>What can users do?</a></li>
                     <li><a href='profile.php'>Profile</a></li>
                     <li><a href='all_users.php'>View all Users</a></li>
+                    <li><a href='maneger_time_off.php'>Time off Request</a></li>
             </ul>
             ";
             case 'user':
                 return "<p>Welcome, User! Enjoy your visit.</p>
-                <li><a href='profile.php'Profile</a></li>
-                <li><a href='all_users.php'>View all Users</a></li>"
-                ;
+                    <li><a href='profile.php'>Profile</a></li>
+                    <li><a href='user_time_off.php'>Time off</a></li>";
             default:
                 return "<p>Welcome! Contact support to assign your role.</p>";
         }
