@@ -1,0 +1,97 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "tondo", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#logo {
+    margin-left: 32px;
+    width: 161px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: #000000;
+    color: white;
+}
+
+.navItems {
+    display: flex;
+    color: #FFFFFF;
+    align-items: center;
+}
+
+.navItems a {
+    margin-right: 32px;
+    /* Adds space between navigation items */
+    color: white;
+    /* Text color for navigation items */
+    text-decoration: none;
+    /* Removes underline from links */
+}
+
+.navItems .navItem4 {
+    background-color: #FFDD00;
+    color: #000000;
+    padding: 8px 16px;
+    border-radius: 16px;
+    font-weight: bold;
+}
+
+.managerDash {
+    margin-left: 184px;
+    margin-right: 184px;
+    margin-top: 128px;
+}
+
+.managerDash p {
+    font-size: 1.5em;
+    margin-bottom: 32px;
+}
+
+.managerDash a {
+    text-decoration: none;
+    margin-right: 184px;
+}
+
+.managerDash li a {
+    color: #000000;
+    font-weight: bold;
+}
+
+.managerDash li {
+    margin-bottom: 32px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #FFDD00;
+}
+
+.managerDash ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+button {
+    background-color: #000000;
+    color: #FFDD00;
+    font-weight: bold;
+    border: 0;
+    padding: 8px 24px;
+    border-radius: 16px;
+    margin-left: 184px;
+}
+
+span {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+strong {
+    font-weight: normal;
+}

@@ -30,12 +30,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <title>Register - Little Sun Shiftplanner</title>
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.typekit.net/qcm6xlo.css">
+    <link rel="stylesheet" href="style/normalize.css">
+    <link rel="stylesheet" href="style/styleRegister.css">
+</head>
 
-<form action="" method="post">
-    <label for="email">Email:</label>
-    <input type="email" name="email" required>
-    <label for="password">Wachtwoord:</label>
-    <input type="password" name="password" required>
-    <button type="submit">Register</button>
-    <a href="login.php" class="btn">Login</a> 
-</form>
+<body>
+
+    <nav>
+        <img src="img/logo.png" alt="" id="logo">
+        <div class="navItems">
+            <a href="" class="navItem1">ITEM</a>
+            <a href="" class="navItem2">ITEM</a>
+            <a href="" class="navItem3">HELP</a>
+            <a href="" class="navItem4">BUTTON</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="bodyText">
+            <h1>Little Sun <span>Shiftplanner</span></h1>
+            <p>Welcome to Little Sun Shiftplanner, the ultimate platform for shift planners in Zambia! At Little Sun Shiftplanner, we empower workers to take control of their schedules by defining their roles and selecting preferred work locations. Our user-friendly interface allows workers to plan their availability for shifts and even schedule well-deserved vacations with ease.</p>
+        </div>
+
+        <form action="" method="post" class="loginForm">
+            <span class="formTitle">Welcome</span>
+            <label for="email">E-mail</label>
+            <input type="email" name="email" required>
+            <label for="password">Password</label>
+            <input type="password" name="password" required>
+            <button type="submit">Register</button>
+            <div class="formLinks">
+                <a href="login.php" class="btn">Already registered?</a>
+            </div>
+        </form>
+    </div>
+</body>
