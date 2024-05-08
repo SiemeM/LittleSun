@@ -105,6 +105,17 @@ class UserManager {
         }
         return true;
     }
+
+    public function getUsersByRole($role) {
+        try {
+            $stmt = $this->dbConnection->prepare("SELECT id, name FROM users WHERE role = ?");
+            $stmt->bindParam(1, $role);  // Gebruik bindParam voor PDO
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Database error: " . $e->getMessage());
+        }
+    }
     
 
 }

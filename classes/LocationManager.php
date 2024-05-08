@@ -54,11 +54,13 @@ class LocationManager {
     }
 
     public function getLocations() {
-        $result = $this->db->query("SELECT * FROM hub_locations");
-        if (!$result) {
-            throw new Exception("Kon locaties niet ophalen: " . $this->db->error);
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM hub_locations");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Kon locaties niet ophalen: " . $e->getMessage());
         }
-        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     private function doesLocationExist($locationName) {

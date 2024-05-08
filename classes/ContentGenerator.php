@@ -21,6 +21,8 @@ class ContentGenerator {
                     <li><a href='profile.php'>Profile</a></li>
                     <li><a href='all_users.php'>View all Users</a></li>
                     <li><a href='maneger_time_off.php'>Time off Request</a></li>
+                    <li><a href='assign_task.php'>Assing work</a></li>
+                    <li><a href='work_schedule_calendar.php'>Calender</a></li>
             </ul>
             ";
             case 'user':
