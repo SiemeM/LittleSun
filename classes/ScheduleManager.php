@@ -2,6 +2,32 @@
 class ScheduleManager {
     private $db;
 
+    private $conn;
+    private $table_name = "work_schedules";
+
+    // Constructor method
+    public function __construct($db) {
+        $this->conn = $db;
+    }
+
+    public function markTimeslotAsSick($userId, $date, $startTime, $endTime) {
+        $query = "UPDATE " . $this->table_name . " SET sick = 1 WHERE user_id = ? AND work_date = ? AND start_time = ? AND end_time = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $userId);
+        $stmt->bindParam(2, $date);
+        $stmt->bindParam(3, $startTime);
+        $stmt->bindParam(4, $endTime);
+        return $stmt->execute();
+    }
+
+    public function getUserScheduledTimeslots($userId) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE user_id = ? AND sick = 0";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $userId);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function __construct($db) {
         $this->db = $db;
     }

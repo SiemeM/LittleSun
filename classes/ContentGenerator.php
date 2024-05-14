@@ -29,7 +29,8 @@ class ContentGenerator {
                 return "<p>Welcome, User! Enjoy your visit.</p>
                     <li><a href='profile.php'>Profile</a></li>
                     <li><a href='user_time_off.php'>Time off</a></li>
-                    <li><a href='clock.php'>clock In</a></li>";
+                    <li><a href='clock.php'>Clock in</a></li>
+                    <li><a href='schedule.php'>Work schedule</a></li>";
             default:
                 return "<p>Welcome! Contact support to assign your role.</p>";
         }
