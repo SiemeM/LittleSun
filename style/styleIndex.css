@@ -48,7 +48,7 @@ nav {
 .managerDash {
     margin-left: 184px;
     margin-right: 184px;
-    margin-top: 128px;
+    margin-top: 80px;
 }
 
 .managerDash p {
@@ -85,6 +85,7 @@ button {
     padding: 8px 24px;
     border-radius: 16px;
     margin-left: 184px;
+    margin-bottom: 80px;
 }
 
 span {

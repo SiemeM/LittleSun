@@ -41,22 +41,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Profile</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; }
-        table { width: 100%; max-width: 600px; margin: auto; background-color: #fff; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #f9f9f9; }
-        img { width: 100px; height: auto; border-radius: 50%; }
-        input, button { padding: 10px; width: 95%; margin-top: 5px; }
-        button { background-color: #5C67F2; color: #fff; border: none; cursor: pointer; }
-        button:hover { background-color: #5058E5; }
-        .error { color: red; } /* Stijl voor foutmeldingen */
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <title>Profile - Little Sun Shiftplanner</title>
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.typekit.net/qcm6xlo.css">
+    <link rel="stylesheet" href="style/normalize.css">
+    <link rel="stylesheet" href="style/styleUserProfile.css">
 </head>
 <body>
+<nav>
+        <a href="index.php">
+        <img src="img/logo.png" alt="" id="logo">
+        </a>
+        <div class="navItems">
+            <a href="login.php" class="navItem4">Logout</a>
+        </div>
+</nav>
     <?php if (!empty($errors)): ?>
     <div class="error">
         <?= implode('<br>', $errors); ?>
@@ -67,32 +72,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <th colspan="2">User Profile</th>
         </tr>
         <tr>
-            <td>Name:</td>
-            <td><?= htmlspecialchars($user['name']); ?></td>
+            <td class="label">Name</td>
+            <td class="input"><?= htmlspecialchars($user['name']); ?></td>
         </tr>
         <tr>
-            <td>Email:</td>
-            <td><?= htmlspecialchars($user['email']); ?></td>
+        <td class="label">Email</td>
+        <td class="input"><?= htmlspecialchars($user['email']); ?></td>
         </tr>
         <tr>
-            <td>Role:</td>
-            <td><?= htmlspecialchars($user['role']); ?></td>
+        <td class="label">Role</td>
+        <td class="input"><?= htmlspecialchars($user['role']); ?></td>
         </tr>
         <tr>
-            <td>Tasks:</td>
-            <td><?= htmlspecialchars($user['tasks'] ?? 'No tasks assigned'); ?></td>
+        <td class="label">Tasks</td>
+        <td class="input"><?= htmlspecialchars($user['tasks'] ?? 'No tasks assigned'); ?></td>
         </tr>
         <tr>
-            <td>Profile Picture:</td>
-            <td><img src="<?= htmlspecialchars($user['profile_picture']); ?>" alt="Profile Picture"></td>
+        <td class="label">Profile Picture</td>
+        <td class="input"><img src="<?= htmlspecialchars($user['profile_picture']); ?>" alt="Profile Picture"></td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td class="tdForm" colspan="2">
                 <form action="" method="post" enctype="multipart/form-data">
                     <input type="text" name="name" value="<?= htmlspecialchars($user['name']); ?>"><br>
                     <input type="email" name="email" value="<?= htmlspecialchars($user['email']); ?>"><br>
                     <input type="password" name="password" placeholder="Password (leave blank to not change)"><br>
-                    <input type="file" name="profile_picture"><br>
+                    <input type="file" name="profile_picture" required id="uploadBtn">
+                    <label class="uploadLabel" for="uploadBtn">Change Profile Picture</label>
                     <button type="submit">Update</button>
                 </form>
             </td>

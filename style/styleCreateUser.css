@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "tondo", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#logo {
+    margin-left: 32px;
+    width: 161px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: #000000;
+    color: white;
+}
+
+.navItems {
+    display: flex;
+    color: #FFFFFF;
+    align-items: center;
+}
+
+.navItems a {
+    margin-right: 32px;
+    /* Adds space between navigation items */
+    color: white;
+    /* Text color for navigation items */
+    text-decoration: none;
+    /* Removes underline from links */
+}
+
+.navItems .navItem4 {
+    background-color: #FFDD00;
+    color: #000000;
+    padding: 8px 16px;
+    border-radius: 16px;
+    font-weight: bold;
+}
+
+form {
+    padding: 32px 0;
+    border-radius: 16px;
+    background-color: #000000;
+    display: flex;
+    flex-direction: column;
+    width: 50%; /* Adjust the width as per your requirement */
+    justify-content: center;
+    margin: 0 auto; /* Center horizontally */
+}
+
+form label {
+    color: #FFFFFF;
+    margin-left: 48px;
+    margin-bottom: 4px;
+}
+
+form .uploadLabel,
+form input[type="email"],
+form input[type="password"],
+form input[type="text"],
+form button {
+    width: 100%;
+    /* Set width to 100% of the form container */
+    max-width: 680px;
+    /* Set max-width to a specific value */
+    margin: 0 auto;
+    /* Center horizontally */
+    margin-bottom: 8px;
+    /* Add margin bottom for spacing */
+}
+
+form button {
+    padding: 8px 0;
+    background-color: #FFDD00;
+    color: #000000;
+    border-radius: 16px;
+    font-weight: bold;
+    margin-top: 32px;
+}
+
+form .pfp {
+    position: relative; /* Make it relative to its container */
+    overflow: hidden; /* Hide the default file input text */
+    padding: 8px 0;
+    background-color: #000000;
+    border: #FFDD00 3px solid;
+    color: #FFDD00;
+    border-radius: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+form input {
+    padding: 8px 0;
+    padding-left: 16px;
+    border-radius: 16px;
+    border: 0;
+}
+
+form input:focus {
+    border: #FFDD00 5px solid;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.uploadLabel {
+    display: inline-block;
+    color: #FFDD00;
+    background-color: #000000;
+    border: #FFDD00 3px solid;
+    text-align: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 16px;
+    font-weight: bold;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 48px;
+}

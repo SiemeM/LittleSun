@@ -40,23 +40,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Assign Task</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; }
-        .container { width: 80%; margin: auto; padding: 20px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        form { margin-top: 20px; }
-        label, select, input { display: block; width: 100%; margin-top: 5px; }
-        button { padding: 10px 20px; margin-top: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #45a049; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <title>Assign Tasks - Little Sun Shiftplanner</title>
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.typekit.net/qcm6xlo.css">
+    <link rel="stylesheet" href="style/normalize.css">
+    <link rel="stylesheet" href="style/styleAssignTasks.css">
 </head>
 <body>
+<nav>
+        <a href="index.php">
+        <img src="img/logo.png" alt="" id="logo">
+        </a>
+        <div class="navItems">
+            <a href="login.php" class="navItem4">Logout</a>
+        </div>
+</nav>
     <div class="container">
         <h1>Assign Tasks to Users</h1>
         <form method="post" action="">
-            <label for="user_id">User:</label>
+            <label for="user_id">User</label>
             <select name="user_id" required onchange="this.form.submit()">
                 <option value="">Select User</option>
                 <?php foreach ($users as $user): ?>
@@ -64,27 +72,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <?php endforeach; ?>
             </select>
 
-            <label for="hub_location_id">Location:</label>
+            <label for="hub_location_id">Location</label>
             <select name="hub_location_id" required>
                 <?php foreach ($locations as $location): ?>
                     <option value="<?= $location['id']; ?>"><?= $location['location_name']; ?></option>
                 <?php endforeach; ?>
             </select>
 
-            <label for="task_type_id">Task Type:</label>
+            <label for="task_type_id">Task Type</label>
             <select name="task_type_id" required>
                 <?php foreach ($taskTypes as $taskType): ?>
                     <option value="<?= $taskType['id']; ?>"><?= $taskType['name']; ?></option>
                 <?php endforeach; ?>
             </select>
 
-            <label for="work_date">Work Date:</label>
+            <label for="work_date">Work Date</label>
             <input type="date" name="work_date" required>
 
-            <label for="start_time">Start Time:</label>
+            <label for="start_time">Start Time</label>
             <input type="time" name="start_time" required>
 
-            <label for="end_time">End Time:</label>
+            <label for="end_time">End Time</label>
             <input type="time" name="end_time" required>
 
             <button type="submit">Assign Task</button>

@@ -21,7 +21,7 @@ $userContent = $contentGenerator->getUserContent($_SESSION['role']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
-    <title>Manager Panel - Little Sun Shiftplanner</title>
+    <title>Dashboard - Little Sun Shiftplanner</title>
     <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://use.typekit.net/qcm6xlo.css">
     <link rel="stylesheet" href="style/normalize.css">
